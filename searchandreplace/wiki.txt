@@ -1,0 +1,8 @@
+Go is a statically typed, compiled programming language designed at Google[11] by Robert Griesemer, Rob Pike, and Ken Thompson.[12] It is syntactically similar to C, but with memory safety, garbage collection, structural typing,[6] and CSP-style concurrency.[13] It is often referred to as Golang because of its former domain name, golang.org, but its proper name is Go.[14]
+
+There are two major implementations:
+
+    Google's self-hosting[15] "gc" compiler toolchain, targeting multiple operating systems and WebAssembly.[16]
+    gofrontend, a frontend to other compilers, with the libgo library. With GCC the combination is gccgo;[17] with LLVM the combination is gollvm.[18][a]
+
+A third-party source-to-source compiler, GopherJS,[20] compiles Go to JavaScript for front-end web development. 
