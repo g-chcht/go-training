@@ -4,12 +4,23 @@ import (
 	"fmt"
 	"os"
 
+	"training.go/hangman/dictionary"
 	"training.go/hangman/hangman"
 )
 
 func main() {
 
-	g := hangman.New(8, "test")
+	err := dictionary.Load("words.txt")
+	if err != nil {
+		fmt.Printf("Something happened: %v", err)
+		os.Exit(1)
+	}
+
+	g, err := hangman.New(8, dictionary.PickWorld())
+	if err != nil {
+		fmt.Printf("Something happened: %v", err)
+		os.Exit(1)
+	}
 
 	hangman.DrawWelcome()
 

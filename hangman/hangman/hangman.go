@@ -1,6 +1,7 @@
 package hangman
 
 import (
+	"fmt"
 	"strings"
 
 	"golang.org/x/exp/slices"
@@ -14,7 +15,11 @@ type Game struct {
 	TurnsLeft    int
 }
 
-func New(turns int, word string) *Game {
+func New(turns int, word string) (*Game, error) {
+	if len(word) <= 0 {
+		return nil, fmt.Errorf("init word is invalid: '%s'", word)
+	}
+
 	letters := strings.Split(strings.ToUpper(word), "")
 	found := make([]string, len(letters))
 	for i := 0; i < len(found); i++ {
@@ -27,15 +32,15 @@ func New(turns int, word string) *Game {
 		FoundLetters: found,
 		TurnsLeft:    turns,
 	}
-	return g
+	return g, nil
 }
 
 func (g *Game) MakeAGuess(guess string) {
 	guess = strings.ToUpper(guess)
 
-	if slices.Contains(g.UsedLetters, guess) {
+	if letterInWord(g.UsedLetters, guess) {
 		g.State = "alreadyGuessed"
-	} else if slices.Contains(g.Letters, guess) {
+	} else if letterInWord(g.Letters, guess) {
 		g.State = "goodGuess"
 		g.RevealLetter(guess)
 
@@ -67,4 +72,8 @@ func hasWon(letters []string, foundLetters []string) bool {
 func (g *Game) LoseTurn(guess string) {
 	g.TurnsLeft -= 1
 	g.UsedLetters = append(g.UsedLetters, guess)
+}
+
+func letterInWord(word []string, guess string) bool {
+	return slices.Contains(word, guess)
 }
